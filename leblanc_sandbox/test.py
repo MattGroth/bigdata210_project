@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from pyspark import SparkConf, SparkContext
+from pyspark.sql import HiveContext
 
 import os
 import collections
@@ -11,6 +12,9 @@ enrollmentCsvPath = r"../data/K-12_Public_School_Enrollment_by_Grade_Level_Octob
 schoolDistrictPopCsvPath = r"../data/WAOFM_-_SAEP_-_School_District_Population_Estimates__2000-2016.csv"
 
 #load school district population data
-df = SparkContext
+hc = HiveContext(sc)
+df = hc.read.format("com.databricks.spark.csv").options(header="true").load(schoolDistrictPopCsvPath)
+
+print df.schema
 
 print "done"
